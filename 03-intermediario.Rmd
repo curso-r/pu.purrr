@@ -3,6 +3,8 @@ title: "Iterações intermediárias"
 author: "Caio Lente"
 ---
 
+## Iterações intermediárias
+
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 

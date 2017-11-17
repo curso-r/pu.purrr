@@ -3,6 +3,8 @@ title: "Iterações básicas"
 author: "Caio Lente"
 ---
 
+## Iterações básicas
+
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 

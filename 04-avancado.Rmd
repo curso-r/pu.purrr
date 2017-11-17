@@ -3,6 +3,8 @@ title: "Iterações avançadas"
 author: "Caio Lente"
 ---
 
+## Iterações avançadas
+
 ```{r, message=FALSE, warning=FALSE, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 
