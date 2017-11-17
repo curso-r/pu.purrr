@@ -1,3 +1,3 @@
 #!/bin/sh
 
-Rscript -e "puBuild::Rmd_bind(titulo = 'Programação funcional')"
+Rscript -e "puBuild::Rmd_bind(titulo = 'Purrr')"
