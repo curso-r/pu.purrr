@@ -1,0 +1,17 @@
+Package: pu.stringr
+Title: placeholder
+Version: 0.0.0.9001
+Authors@R: c(
+    person("Caio", "Lente", , "ctlente@gmail.com", "cre"),
+    person("CursoR", role = c("cph"))
+    )
+Description: placeholder.
+Depends: R (>= 3.3.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    purrr,
+    puBuild
+Remotes: curso-r/puBuild
+RoxygenNote: 5.0.1
