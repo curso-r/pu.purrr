@@ -34,6 +34,8 @@ library(purrr)
 
 
 
+## Iterações básicas
+
 
 
 A primeira família de funções do `purrr` que veremos também é a mais útil e
@@ -155,6 +157,8 @@ legibilidade.
 
 
 
+## Iterações intermediárias
+
 
 
 **Obs.:** Note que quando usarmos o termo "paralelo" daqui para frente, estaremos
@@ -261,6 +265,8 @@ ao `i` no laço com `for`). Naturalmente, assim como toda a família `map()`, a
 --------------------------------------------------------------------------------
 
 
+
+## Iterações avançadas
 
 
 
@@ -438,6 +444,8 @@ Para a nossa comodidade, essas duas funções também têm variedades paralelas
 --------------------------------------------------------------------------------
 
 
+
+## Miscelânea
 
 
 
