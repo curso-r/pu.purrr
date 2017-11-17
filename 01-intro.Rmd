@@ -3,6 +3,34 @@ title: "Programação Funcional"
 author: "Caio Lente"
 ---
 
-Este é apenas um teste
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  out.width = "60%", out.height = "60%",
+  fig.retina = 2
+)
+```
+
+Programação funcional (PF) é um paradigma de programação com o qual a maior parte
+dos estatísticos não está familiarizada. Essa técnica costuma ser ignorada na
+maioria dos tutoriais de R por não estar diretamente envolvida com manipulação e
+visualização de dados, mas isso não quer dizer que ela não tenha suas vantagens.
+
+Usando PF podemos criar códigos mais concisos e "pipeávais", características que
+por tabela também tornam o processo de debug mais simples. Além disso, códigos
+funcionais geralmente são paralelizáveis, permitindo que tratemos problemas muito
+grandes com poucas modificações.
+
+Apesar de o R `base` já ter funções que podem ser consideradas elementos de PF, a
+implementação destas não é tão elegante e, portanto, este tutorial abordará
+somente a implementação de PF realizada pelo pacote `purrr`.
+
+Para instalar e carregar o `purrr`, rode o código a seguir. Nas próximas seções
+deste tutorial, assumiremos que você têm esse pacote instalado e carregado.
+
+```{r, eval=FALSE}
+install.packages("purrr")
+library(purrr)
+```
 
 --------------------------------------------------------------------------------

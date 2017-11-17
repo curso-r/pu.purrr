@@ -1,0 +1,104 @@
+---
+title: "Iterações intermediárias"
+author: "Caio Lente"
+---
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  out.width = "60%", out.height = "60%",
+  fig.retina = 2
+)
+library(purrr)
+```
+
+**Obs.:** Note que quando usarmos o termo "paralelo" daqui para frente, estaremos
+nos referindo a laços em mais de uma estrutura e não a paralelização de
+computações em mais de uma unidade de processamento.
+
+Agora que já exploramos os básicos da família `map()` podemos partir para
+iterações um pouco mais complexas. Observe o laço a seguir:
+
+```{r}
+soma_ambos <- function(x, y) { x + y }
+obj_1 <- 10:15
+obj_2 <- 20:25
+
+for (i in seq_along(obj_1)) {
+  obj_1[i] <- soma_ambos(obj_1[i], obj_2[i])
+}
+obj_1
+```
+
+Com a função `map2()` podemos reproduzir o laço acima em apenas uma linha. Ela
+abstrai a iteração em paralelo, aplica a função em cada par de elementos das
+entradas e, assim como sua prima `map()`, pode achatar o objeto retornado com os
+sufixos `_chr`, `_dbl`, `_int` e `_lgl`.
+
+```{r}
+soma_ambos <- function(x, y) { x + y }
+obj_1 <- 10:15
+obj_2 <- 20:25
+
+obj_1 <- map2_dbl(obj_1, obj_2, soma_ambos)
+obj_1
+```
+
+Como o pacote `purrr` é extremamente consistente, a `map2()` também funciona com
+reticências e fórmulas. Poderíamos, por exemplo, transformar `soma_ambos()` em
+uma função anônima:
+
+```{r}
+obj_1 <- 10:15
+obj_2 <- 20:25
+
+map2_dbl(obj_1, obj_2, ~.x+.y)
+```
+
+Desta vez também temos acesso ao placeholder `.y` para indicar onde os elementos
+de do segundo vetor devem ir.
+
+### Generalização do paralelismo
+
+Para não precisar oferecer uma função para cada número de argumentos, o pacote
+`purrr` fornece a `pmap()`. Para essa função devemos passar uma lista em que cada
+elemento é um dos objetos a ser iterado:
+
+```{r}
+soma_varios <- function(x, y, z) { x + y + z }
+obj_1 <- 10:15
+obj_2 <- 20:25
+obj_3 <- 30:35
+
+obj_1 <- pmap_dbl(list(obj_1, obj_2, obj_3), soma_varios)
+obj_1
+```
+
+Com a `pmap()` infelizmente não podemos usar fórmulas. Se quisermos usar uma
+função anônima com ela, precisamos declará-la a função no seu corpo:
+
+```{r}
+obj_1 <- 10:15
+obj_2 <- 20:25
+obj_3 <- 30:35
+
+pmap_dbl(list(obj_1, obj_2, obj_3), function(x, y, z) { x + y + z })
+```
+
+### Iterando em índices
+
+A última função que veremos nessa seção é a `imap()`. No fundo ela é um
+atalho para `map2(x, names(x), ...)` quando `x` tem nomes e para
+`map2(x, seq_along(x), ...)` caso contrário:
+
+```{r}
+obj <- 10:15
+
+imap_dbl(obj, ~.x+.y)
+```
+
+Como podemos observar, agora `.y` é o placeholder para o índice atual (equivalente
+ao `i` no laço com `for`). Naturalmente, assim como toda a família `map()`, a
+`imap()` também funciona com os sufixos de achatamento.
+
+--------------------------------------------------------------------------------

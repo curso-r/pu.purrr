@@ -1,0 +1,130 @@
+---
+title: "Miscelânea"
+author: "Caio Lente"
+---
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  out.width = "60%", out.height = "60%",
+  fig.retina = 2
+)
+library(purrr)
+```
+
+Por fim, veremos algumas funções do `purrr` que nêo têm exatamente a ver com
+laços, mas que acabam sendo bastante úteis quando usando as funções que vimos
+até agora. Elas não serão apresentadas em nenhuma ordem específica, este é apenas
+um apanhado de funções sortidas que achamos úteis enquanto programando com o 
+`purrr`.
+
+### Manter e descartar
+
+Se quisermos filtrar elementos de um vetor ou lista, podemos usar as funções
+`keep()` e `discard()`. Elas funcionam com fórmulas e podem ser extremamente úteis
+em situações que `dplyr::select()` e `magrittr::extract()` não conseguem cobrir:
+
+```{r}
+obj <- list(10:15, 20:25, c(30:34, NA))
+
+keep(obj, ~any(is.na(.x)))
+
+discard(obj, ~!any(is.na(.x)))
+```
+
+No exemplo acima descartamos todos os vetores da lista que não têm pelo menos um
+elemento omisso (`NA`).
+
+### A família `is`
+
+Uma outra família do pacote `purrr` é a `is()`. Com essa série de funções podemos
+fazer verificações extremamente estritas em objetos dos mais variados tipos. Seguem
+alguns poucos exemplos:
+
+```{r}
+is_scalar_integer(10:15)
+
+is_bare_integer(10:15)
+
+is_atomic(10:15)
+
+is_vector(10:15)
+```
+
+### Andar e modificar
+
+`walk()` e `modify()` são pequenas alterações da família `map()` que vêm a calhar
+em diversas situações. A primeira destas funciona exatamente igual à `map()` mas
+não devolve resultado, apenas efeitos colaterais; a segunda, não muda a
+estrutura do objeto sendo iterado, ela substitui os próprios elementos da entrada.
+
+<div class='admonition note'>
+<p class='admonition-title'>
+Escrevendo múltiplas tabelas
+</p>
+<p>
+A maior utilidade de <code>walk</code> é quando precisamos salvar múltiplas
+tabelas. Para fazer isso, podemos usar algo como
+<code>walk(tabelas, readr::write_csv)</code>.
+</p>
+</div>
+
+Um caso de uso interessante da `modify()` é quando junta do sufixo `_if()`,
+combinação que nos permite iterar nas colunas de uma tabela e aplicar
+transformações de tipo apenas quando um predicado for verdade (geralmente de
+queremos transformar as colunas de fator para caractere).
+
+### Transposição e indexação profunda
+
+Quando precisarmos lidar com listas complexas e profundas, o `purrr` nos fornece
+duas funções extremamente úteis: `transpose()` e `pluck()`. A primeira transpõe
+uma lista, enquanto a segunda é capaz de acessar elementos profundos de uma lista
+sem a necessidade de colchetes.
+
+```{r}
+obj <- list(list(a = 1, b = 2, c = 3), list(a = 4, b = 5, c = 6))
+str(obj)
+
+pluck(obj, 2, "b")
+
+str(transpose(obj))
+```
+
+**Obs.:** Se você estiver com muitos problemas com listas profundas, dê uma olhada
+nas funções relacionadas a `depth()` pois elas podem ser muito úteis.
+
+### Aplicação parcial
+
+Se quisermos pré-preencher os argumentos de uma função (seja para usá-la em uma
+pipeline ou com alguma função do próprio `purrr`), temos `partial()`. Ela funciona
+nos moldes da família `invoke()` e pode ser bastante útil para tornar suas
+pipelines mais enxutas:
+
+```{r}
+soma_varios <- function(x, y, z) { x + y + z }
+
+nova_soma <- partial(soma_varios, x = 1, y = 2)
+nova_soma(3)
+```
+
+### Execução segura
+
+Não é incomum executarmos uma função e recebermos um erro de volta. Isso pode ser
+lidado com facilidade em um laço com um condicional, mas essa tarefa já é mais
+complexa quando se trata de programação funcional. Para isso, no `purrr` temos
+algumas funções que embrulham uma função e, quando esta retornar um erro, o
+silenciam e retornam um valor padrão em seu lugar.
+
+`quietly()` retorna uma lista com resultado, saída, mensagem e alertas, `safely()`
+retorna uma lista com resultado e erro (um destes sempre é `NULL`), e `possibly()`
+silencia o erro e retorna um valor dado pelo usuário.
+
+```{r}
+soma_um <- function(x) { x + 1 }
+s_soma_um <- safely(soma_um, 0)
+obj <- c(10, 11, "a", 13, 14, 15)
+
+s_soma_um(obj)
+```
+
+--------------------------------------------------------------------------------
