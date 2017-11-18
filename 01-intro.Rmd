@@ -16,7 +16,7 @@ dos estatísticos não está familiarizada. Essa técnica costuma ser ignorada n
 maioria dos tutoriais de R por não estar diretamente envolvida com manipulação e
 visualização de dados, mas isso não quer dizer que ela não tenha suas vantagens.
 
-Usando PF podemos criar códigos mais concisos e "pipeávais", características que
+Usando PF podemos criar códigos mais concisos e "pipeáveis", características que
 por tabela também tornam o processo de debug mais simples. Além disso, códigos
 funcionais geralmente são paralelizáveis, permitindo que tratemos problemas muito
 grandes com poucas modificações.
