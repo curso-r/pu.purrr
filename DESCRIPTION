@@ -2,7 +2,7 @@ Package: pu.stringr
 Title: placeholder
 Version: 0.0.0.9001
 Authors@R: c(
-    person("Caio", "Lente", , "ctlente@gmail.com", "cre"),
+    person("Caio", "Lente", , "ctlente@curso-r.com", "cre"),
     person("CursoR", role = c("cph"))
     )
 Description: placeholder.
